@@ -9,33 +9,18 @@ import (
 )
 
 type RssReader struct {
-	feedLister FeedLister
 	httpClient http.Client
 }
 
-type FeedLister interface {
-	ListAll() ([]string, error)
-}
-
-func NewRssReader(feedLister FeedLister) RssReader {
+func NewRssReader() RssReader {
 	return RssReader{
-		feedLister: feedLister,
 		httpClient: http.Client{
 			Timeout: time.Second * 5,
 		},
 	}
 }
 
-func (r *RssReader) ProcessFeeds() ([]Feed, error) {
-	feedUrls, err := r.feedLister.ListAll()
-	if err != nil {
-		return nil, fmt.Errorf("Failed to list rss feeds: %v", err)
-	}
-
-	return r.readAll(feedUrls), nil
-}
-
-func (r *RssReader) readAll(feedUrls []string) []Feed {
+func (r *RssReader) ReadAll(feedUrls []string) []Feed {
 	feeds := []Feed{}
 	for _, f := range feedUrls {
 		feed, err := r.read(f)
