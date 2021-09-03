@@ -20,4 +20,4 @@ jobs:
       - name: Build Lambda Artifact
         run: make build
       - name: Plan deployment
-        run: terraform plan
+        run: terraform plan infra
