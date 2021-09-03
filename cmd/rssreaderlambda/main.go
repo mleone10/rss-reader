@@ -1,8 +1,17 @@
 package main
 
-import "log"
+import (
+	"context"
+
+	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/mleone10/rss-reader/internal"
+	"github.com/mleone10/rss-reader/pkg/dynamo"
+)
+
+func HandleRequest(ctx context.Context) error {
+	return internal.ProcessFeeds(dynamo.HardcodedFeedLister{})
+}
 
 func main() {
-	// TODO: Refactor to conform to lambda handler spec
-	log.Println("Executing lambda function")
+	lambda.Start(HandleRequest)
 }

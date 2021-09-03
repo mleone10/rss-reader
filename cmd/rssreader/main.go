@@ -6,5 +6,5 @@ import (
 )
 
 func main() {
-	internal.ProcessFeeds(&dynamo.HardcodedFeedLister{})
+	internal.ProcessFeeds(dynamo.HardcodedFeedLister{})
 }
