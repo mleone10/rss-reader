@@ -28,8 +28,14 @@ resource "aws_iam_role" "lambda_role" {
   inline_policy {
     name = "${var.project_name}-policy"
     policy = jsonencode({
-      Version   = "2012-10-17"
-      Statement = []
+      Version = "2012-10-17"
+      Statement = [
+        {
+          "Effect" : "Allow",
+          "Action" : "dynamodb:Query"
+          "Resource" : "*"
+        }
+      ]
     })
   }
 }
