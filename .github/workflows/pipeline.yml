@@ -1,0 +1,23 @@
+name: Deploy RSS Reader to AWS
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.17.x
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+      - name: Build Lambda Artifact
+        run: make build
+      - name: Plan deployment
+        run: terraform plan
