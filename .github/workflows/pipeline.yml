@@ -28,4 +28,4 @@ jobs:
       - name: Set up Terraform environment
         run: terraform -chdir=infra init
       - name: Deploy infrastructure
-        run: terraform -chdir=infra apply
+        run: terraform -chdir=infra apply -auto-approve
