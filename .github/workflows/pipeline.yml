@@ -24,7 +24,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Build Lambda Artifact
-        run: make build
+        run: |
+          make build
+          zip handler.zip ./bin/rssreaderlambda
       - name: Set up Terraform environment
         run: terraform -chdir=infra init
       - name: Deploy infrastructure
