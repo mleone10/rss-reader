@@ -45,6 +45,6 @@ resource "aws_lambda_function" "lambda_function" {
   function_name = "${var.project_name}-lambda"
   filename      = "../handler.zip"
   role          = aws_iam_role.lambda_role.arn
-  handler       = "bin/rsshandlerlambda"
+  handler       = "bin/rssreaderlambda"
   runtime       = "go1.x"
 }
