@@ -40,15 +40,11 @@ resource "aws_iam_role" "lambda_role" {
   }
 }
 
-resource "aws_lambda_function" "test_lambda" {
+resource "aws_lambda_function" "lambda_function" {
 
   function_name = "${var.project_name}-lambda"
   filename      = "../handler.zip"
   role          = aws_iam_role.lambda_role.arn
-  handler       = "main"
+  handler       = "bin/rsshandlerlambda"
   runtime       = "go1.x"
 }
-
-// TODO: Test saving state from local to S3
-// TODO: Get remote state working on GitHub
-// TODO: Script artifact upload and lambda deployment
