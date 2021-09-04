@@ -48,3 +48,7 @@ resource "aws_lambda_function" "lambda_function" {
   handler       = "bin/rssreaderlambda"
   runtime       = "go1.x"
 }
+
+resource "aws_sns_topic" "sns_topic" {
+  name = "${var.project_name}-new-events"
+}
