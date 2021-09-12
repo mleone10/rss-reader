@@ -54,6 +54,8 @@ resource "aws_sns_topic" "sns_topic" {
 }
 
 resource "aws_dynamodb_table" "dynamodb_table" {
-  name = "${var.project_name}-items"
-  
+  name         = "${var.project_name}-items"
+  billing_mode = "PROVISIONED"
+  hash_key     = "channel"
+  range_key    = "item_guid"
 }
