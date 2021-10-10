@@ -1,4 +1,4 @@
-module github.com/mleone10/rss-reader
+module github.com/mleone10/rssreader
 
 go 1.15
 

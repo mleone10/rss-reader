@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/mleone10/rss-reader/internal"
+	"github.com/mleone10/rssreader/internal"
 )
 
 func main() {
