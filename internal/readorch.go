@@ -7,10 +7,15 @@ import (
 
 type ReadOrchestrator struct {
 	rssReader rssReader
+	db        *dynamoDataStore
 }
 
 func (o ReadOrchestrator) ProcessFeeds() error {
-	feedUrls, err := listFeeds()
+	if o.db == nil {
+		o.db, _ = newDynamodbClient()
+	}
+
+	feedUrls, err := o.db.listFeeds()
 	if err != nil {
 		return fmt.Errorf("Failed to list rss feeds: %v", err)
 	}
