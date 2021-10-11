@@ -1,4 +1,4 @@
-package rss
+package internal
 
 import (
 	"encoding/xml"
@@ -8,19 +8,17 @@ import (
 	"time"
 )
 
-type RssReader struct {
-	httpClient http.Client
+type rssReader struct {
+	httpClient *http.Client
 }
 
-func NewRssReader() RssReader {
-	return RssReader{
-		httpClient: http.Client{
-			Timeout: time.Second * 5,
-		},
+func (r rssReader) ReadAll(feedUrls []string) []Feed {
+	if r.httpClient == nil {
+		r.httpClient = &http.Client{
+			Timeout: 5 * time.Second,
+		}
 	}
-}
 
-func (r *RssReader) ReadAll(feedUrls []string) []Feed {
 	feeds := []Feed{}
 	for _, f := range feedUrls {
 		feed, err := r.read(f)
@@ -33,7 +31,7 @@ func (r *RssReader) ReadAll(feedUrls []string) []Feed {
 	return feeds
 }
 
-func (r *RssReader) read(feedUrl string) (*Feed, error) {
+func (r rssReader) read(feedUrl string) (*Feed, error) {
 	res, err := r.httpClient.Get(feedUrl)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get rss feed: %v", err)

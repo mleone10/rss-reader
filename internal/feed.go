@@ -1,4 +1,4 @@
-package rss
+package internal
 
 type Feed struct {
 	Channel Channel `xml:"channel"`

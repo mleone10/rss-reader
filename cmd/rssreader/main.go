@@ -1,10 +1,9 @@
 package main
 
 import (
-	"github.com/mleone10/rss-reader/internal"
-	"github.com/mleone10/rss-reader/pkg/dynamo"
+	"github.com/mleone10/rssreader/internal"
 )
 
 func main() {
-	internal.ProcessFeeds(dynamo.HardcodedFeedLister{})
+	internal.ReadOrchestrator{}.ProcessFeeds()
 }

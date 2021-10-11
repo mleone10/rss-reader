@@ -3,28 +3,32 @@ package internal
 import (
 	"fmt"
 	"log"
-
-	"github.com/mleone10/rss-reader/pkg/rss"
 )
 
-type FeedLister interface {
-	ListAllFeeds() ([]string, error)
+type ReadOrchestrator struct {
+	rssReader rssReader
+	db        *dynamoDataStore
 }
 
-func ProcessFeeds(f FeedLister) error {
-	r := rss.NewRssReader()
+func (o ReadOrchestrator) ProcessFeeds() error {
+	if o.db == nil {
+		o.db, _ = newDynamodbClient()
+	}
 
-	feedUrls, err := f.ListAllFeeds()
+	feedUrls, err := o.db.listFeeds()
 	if err != nil {
 		return fmt.Errorf("Failed to list rss feeds: %v", err)
 	}
 
-	fs := r.ReadAll(feedUrls)
-	for _, f := range fs {
-		for _, i := range f.Channel.Items {
-			log.Println(i.Title)
-		}
+	for _, f := range o.rssReader.ReadAll(feedUrls) {
+		o.processFeed(f)
 	}
 
 	return nil
+}
+
+func (o ReadOrchestrator) processFeed(f Feed) {
+	for _, i := range f.Channel.Items {
+		log.Println(i.Title)
+	}
 }
