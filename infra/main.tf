@@ -77,10 +77,11 @@ resource "aws_dynamodb_table" "dynamodb_table" {
   }
 
   global_secondary_index {
-    name           = "channels"
-    write_capacity = 1
-    read_capacity  = 1
-    hash_key       = "channel"
-    range_key      = "channel_update_ts"
+    name            = "channels"
+    write_capacity  = 1
+    read_capacity   = 1
+    hash_key        = "channel"
+    range_key       = "channel_update_ts"
+    projection_type = "KEYS_ONLY"
   }
 }
