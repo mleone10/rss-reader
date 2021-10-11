@@ -70,4 +70,17 @@ resource "aws_dynamodb_table" "dynamodb_table" {
     name = "item_guid"
     type = "S"
   }
+
+  attribute {
+    name = "channel_update_ts"
+    type = "S"
+  }
+
+  global_secondary_index {
+    name           = "channels"
+    write_capacity = 1
+    read_capacity  = 1
+    hash_key       = "channel"
+    range_key      = "channel_update_ts"
+  }
 }
